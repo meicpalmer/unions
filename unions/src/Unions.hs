@@ -89,10 +89,10 @@ instance (c a, MakeIntersection (Poly1 c b) (Intersection t b)) =>
     MakeIntersection (Poly1 c b) (Intersection (a ': t) b) where
   mkIntersection (p@(Poly1 f)) = f <&> mkIntersection p
 
-fix1 :: Poly2 c b -> a -> Poly1 (c a) b
-fix1 (Poly2 f) a = Poly1 (f a)
+ap1 :: Poly2 c b -> a -> Poly1 (c a) b
+ap1 (Poly2 f) a = Poly1 (f a)
 
 instance (MakeIntersection (Poly1 (c a) b) (Intersection u2 b),
           MakeIntersection (Poly2 c b) (Intersection t (Intersection u2 b))) =>
     MakeIntersection (Poly2 c b) (Intersection (a ': t) (Intersection u2 b)) where
-  mkIntersection p = (mkIntersection . fix1 p) <&> mkIntersection p
+  mkIntersection p = (mkIntersection . ap1 p) <&> mkIntersection p
